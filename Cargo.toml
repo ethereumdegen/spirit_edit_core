@@ -17,13 +17,13 @@ exclude = ["assets"]
 
 [dependencies]
  
- 
+ bevy = "0.14.0"
 bevy_mod_raycast = "0.18.0"
 
-
+bevy_egui = "0.28"
 bevy_mod_picking = "0.20.0" 
  
- 
+ bevy_clay_tiles = "0.14.2"
 
 serde = { version = "1", features = ["derive"] }
   
@@ -33,15 +33,5 @@ serde = { version = "1", features = ["derive"] }
   
 ron = "0.8.1"
 
-
-[dev-dependencies]
-bevy = { version = "0.14", default-features = false, features = [
-    "bevy_winit",
-    "bevy_core_pipeline",
-    "x11",
-
-    "tonemapping_luts",
-    "zstd",
-    "ktx2",             # https://github.com/bevyengine/bevy/discussions/9100
-] }
+rand = "0.8"
  
