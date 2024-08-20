@@ -76,6 +76,19 @@ pub enum CustomProp {
 }
 
 
+impl std::fmt::Display for CustomProp {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            CustomProp::Vec3(vec) => write!(f, "{}", vec),
+            CustomProp::String(s) => write!(f, "{}", s),
+            CustomProp::Float(num) => write!(f, "{}", num),
+            CustomProp::Integer(num) => write!(f, "{}", num),
+            CustomProp::Boolean(b) => write!(f, "{}", b),
+            CustomProp::EmptyProp => write!(f, ""),
+        }
+    }
+}
+
 
 
 
