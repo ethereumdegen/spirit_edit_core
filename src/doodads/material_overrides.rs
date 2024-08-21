@@ -15,7 +15,7 @@ pub enum MaterialOverrideLayer {
 
 impl MaterialOverrideLayer {
 
-	fn get_material_layer_name(&self) -> String {
+	pub fn get_material_layer_name(&self) -> String {
 
 
 		match &self {
@@ -37,7 +37,7 @@ pub enum MaterialOverrideType {
 
 impl MaterialOverrideType {
 
-	fn get_material_name(&self) -> String {
+	pub fn get_material_name(&self) -> String {
 
 
 		match &self {
