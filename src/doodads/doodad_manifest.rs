@@ -1,3 +1,5 @@
+use crate::doodads::material_overrides::MaterialOverrideLayer;
+use crate::doodads::material_overrides::MaterialOverrideType;
 use crate::zones::zone_file::CustomPropsMap;
 use bevy::utils::HashMap;
 use std::{
@@ -83,6 +85,8 @@ pub struct DoodadDefinition {
     pub initial_custom_props: Option<CustomPropsMap>,
     pub tags: Option<Vec<String>> ,
     pub snap_dimensions: Option<Vec2>, 
+
+    pub material_overrides: Option<HashMap<MaterialOverrideLayer,MaterialOverrideType >>
 }
 /*
 impl DoodadManifest {

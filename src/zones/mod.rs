@@ -36,7 +36,7 @@ pub mod zone_file;
 
 use zone_file::ZoneFile;
 
-use self::zone_file::CustomPropsComponent;
+//use self::zone_file::CustomPropsComponent;
 
 const DEFAULT_FILENAME: &str = "zone01";
 
