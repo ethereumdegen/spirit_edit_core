@@ -18,8 +18,11 @@ impl Plugin for SpiritEditCorePlugin {
          app
            	
 
+             .add_plugins(DoodadPlugin {})
+            
+
            	 .add_event::<placement::PlacementEvent>()
-           	 .add_event::<doodads::picking::SelectDoodadEvent>()
+           	
             .init_resource::<placement::PlacementResource>()
 
             .init_resource::<placement::PlacementToolsState>()
@@ -42,8 +45,7 @@ impl Plugin for SpiritEditCorePlugin {
             ).chain())
 
 
-            .add_plugins(DoodadPlugin {})
-              
+             
              
 
 

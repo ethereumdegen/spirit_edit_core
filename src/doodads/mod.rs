@@ -48,11 +48,14 @@ impl Plugin for DoodadPlugin {
     fn build(&self, app: &mut App) {
         //put this inside of zone plugin ?
          app
-
+             .add_event::< picking::SelectDoodadEvent>()
              .add_event::< PlaceDoodadEvent>()
                .add_event::< DoodadToolEvent>()
 
-            //.init_resource::<DoodadTagMapResource>()
+               .init_resource::<DoodadToolState>()
+
+           .init_resource::<DoodadTagMapResource>()
+             .init_resource::<DoodadDefinitionsResource>()
 
 
           //    .add_plugins(DoodadPlacementPlugin {} )
