@@ -35,7 +35,8 @@ pub enum MaterialOverrideType {
 	Stone3,
 
 	StoneToon1,
-	StoneToon2
+	StoneToon2,
+	DirtToon1
 }
 
 impl MaterialOverrideType {
@@ -48,7 +49,8 @@ impl MaterialOverrideType {
 			Self::Stone2 => "Stone2",
 			Self::Stone3 => "Stone3",
 			Self::StoneToon1 => "StoneToon1",
-			Self::StoneToon2 => "StoneToon2"
+			Self::StoneToon2 => "StoneToon2",
+			Self::DirtToon1 => "DirtToon1"
 		}.into()
 
 	}
