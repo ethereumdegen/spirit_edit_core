@@ -23,7 +23,9 @@ bevy_mod_raycast = "0.18.0"
 bevy_egui = "0.28"
 bevy_mod_picking = "0.20.0" 
  
- bevy_clay_tiles = "0.14.2"
+
+ # need to keep this updated  !  a pain .. 
+ bevy_clay_tiles = "0.14.6"
 
 serde = { version = "1", features = ["derive"] }
   

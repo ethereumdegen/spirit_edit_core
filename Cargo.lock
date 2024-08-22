@@ -541,9 +541,9 @@ dependencies = [
 
 [[package]]
 name = "bevy_clay_tiles"
-version = "0.14.2"
+version = "0.14.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c16789e5e86f4d48c421822951a52d5043a52ae79ba7f8e7d87e5f224c90d1f"
+checksum = "203d8af562604e4e0cd10de44a353e44e80d2db7a1fa7f321469026d7dbf946d"
 dependencies = [
  "anyhow",
  "bevy 0.14.1",
@@ -1855,9 +1855,9 @@ dependencies = [
 
 [[package]]
 name = "bitstream-io"
-version = "2.5.0"
+version = "2.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3dcde5f311c85b8ca30c2e4198d4326bc342c76541590106f5fa4a50946ea499"
+checksum = "b81e1519b0d82120d2fd469d5bfb2919a9361c48b02d82d04befc1cdd2002452"
 
 [[package]]
 name = "blake3"
