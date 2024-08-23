@@ -31,6 +31,8 @@ impl MaterialOverrideLayer {
 #[derive(Clone,Debug,PartialEq,Eq,Hash,Serialize,Deserialize)]
 pub enum MaterialOverrideType {
 	Wall1,
+	Rocks1,
+	Rocks2,
 	 
 
 	StoneToon1,
@@ -46,6 +48,8 @@ impl MaterialOverrideType {
 
 		match &self {
 			Self::Wall1 => "Wall1",
+			Self::Rocks1 => "Rocks1",
+			Self::Rocks2 => "Rocks2",
 		 
 			Self::StoneToon1 => "StoneToon1",
 			Self::StoneToon2 => "StoneToon2",
