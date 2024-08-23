@@ -36,7 +36,7 @@ use self::doodad_manifest::{DoodadDefinition, DoodadManifest, DoodadDefinitionsR
 //use self::doodad_placement_preview::DoodadPlacementComponent;
 
  
-pub mod material_overrides; 
+//pub mod material_overrides; 
 pub mod doodad_manifest;
 pub mod picking;
 pub mod doodad;
