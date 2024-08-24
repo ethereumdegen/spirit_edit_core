@@ -1,7 +1,7 @@
 [package]
 name = "spirit_edit_core"
 description = "A utility library for spirit editor"
-version = "0.14.8" 
+version = "0.14.9" 
 edition = "2021"
 authors = [ "ethereumdegen" ]
 license = "MIT"
