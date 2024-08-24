@@ -53,5 +53,5 @@ impl DoodadComponent {
 }
  
 
-#[derive(Component, Debug)]
+#[derive(Component, Debug,Default)]
 pub struct RebuildDoodad ;
