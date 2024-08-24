@@ -51,3 +51,7 @@ impl DoodadComponent {
         }
     }
 }
+ 
+
+#[derive(Component, Debug)]
+pub struct RebuildDoodad ;
