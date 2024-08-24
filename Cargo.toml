@@ -25,7 +25,7 @@ bevy_mod_picking = "0.20.0"
  
 
  # need to keep this updated  !  a pain .. 
-  bevy_clay_tiles = "0.14.8"
+  bevy_clay_tiles = "0.14.10"
 
  #bevy_clay_tiles =  {path="../bevy_clay_tiles"}
 
