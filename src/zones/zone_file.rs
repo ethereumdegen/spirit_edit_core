@@ -5,6 +5,7 @@ use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock };
 
 #[derive(Serialize, Deserialize)]
 pub struct ZoneFile {
+    pub translation_offset: Option<Vec3>, 
     pub entities: Vec<ZoneEntity>, 
 }
 
