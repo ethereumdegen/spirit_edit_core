@@ -5,6 +5,7 @@ use bevy::prelude::*;
 use doodads::DoodadPlugin;
 use zones::{zone_file::{CustomProp, CustomPropsComponent},  ZoneEvent,SaveZoneToFileEvent, ZoneResource};
 
+pub use bevy_clay_tiles; // export
 
 pub mod doodads;
 pub mod zones;
