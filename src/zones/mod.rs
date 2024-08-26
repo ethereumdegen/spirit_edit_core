@@ -460,7 +460,8 @@ pub fn handle_save_zone_events(
 
         let zone_file = ZoneFile {
 
-            entities: zone_entities
+            entities: zone_entities,
+            ..default()
         };
 
         let zone_file_name = format!("assets/zones/{}.zone.ron", fixed_zone_name);

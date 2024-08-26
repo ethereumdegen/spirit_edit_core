@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock }; 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize,Default)]
 pub struct ZoneFile {
     pub translation_offset: Option<Vec3>, 
     pub entities: Vec<ZoneEntity>, 
