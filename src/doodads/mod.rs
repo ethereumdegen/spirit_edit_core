@@ -40,6 +40,7 @@ use self::doodad_manifest::{DoodadDefinition, DoodadManifest, DoodadDefinitionsR
 pub mod doodad_manifest;
 pub mod picking;
 pub mod doodad;
+pub mod rotate;
 //pub mod doodad_placement_preview;
 
 
@@ -50,13 +51,15 @@ impl Plugin for DoodadPlugin {
          app
              .add_event::< picking::SelectDoodadEvent>()
              .add_event::< PlaceDoodadEvent>()
-               .add_event::< DoodadToolEvent>()
+             .add_event::< DoodadToolEvent>()
 
-               .init_resource::<DoodadToolState>()
+             .init_resource::<DoodadToolState>()
 
-           .init_resource::<DoodadTagMapResource>()
+             .init_resource::<DoodadTagMapResource>()
              .init_resource::<DoodadDefinitionsResource>()
 
+
+              .add_systems(Update, rotate::handle_rotate_by_degrees)
 
           //    .add_plugins(DoodadPlacementPlugin {} )
             
