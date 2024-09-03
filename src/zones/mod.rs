@@ -1,4 +1,5 @@
-use crate::zones::zone_file::ZoneEntity;
+use crate::prefabs::SpawnPrefabEvent;
+use crate::{doodads::PlaceClayTileEvent };
 use bevy_clay_tiles::clay_tile_block::ClayTileBlock;
 use std::fs;
 use bevy::prelude::*;
@@ -35,6 +36,8 @@ pub struct ZoneResource {
 pub mod zone_file;
 
 use zone_file::ZoneFile;
+
+use self::zone_file::ZoneEntityV2;
 
 //use self::zone_file::CustomPropsComponent;
 
@@ -241,6 +244,10 @@ pub fn handle_zone_events(
     mut save_zone_evt_writer: EventWriter<SaveZoneToFileEvent>,
 
     mut spawn_doodad_event_writer: EventWriter<PlaceDoodadEvent>,
+
+    mut spawn_clay_tile_event_writer: EventWriter<PlaceClayTileEvent>,
+    
+    mut spawn_prefab_event_writer: EventWriter<SpawnPrefabEvent>,
 ) {
     for evt in evt_reader.read() {
         match evt {
@@ -367,17 +374,64 @@ pub fn handle_zone_events(
                 //trigger spawn doodad events
 
                 for zone_entity in zone_file.entities {
-                    spawn_doodad_event_writer.send({
-                        PlaceDoodadEvent {
-                            doodad_name: zone_entity.name.clone(),
-                            position: zone_entity.get_position(),
-                            rotation_euler: Some(zone_entity.get_rotation_euler()),
-                            scale: Some(zone_entity.get_scale()),
-                            custom_props: zone_entity.get_custom_props().clone(),
-                            clay_tile_block_data: zone_entity.clay_tile_block_data.clone(), 
-                            zone:Some(created_zone)
+
+                    match zone_entity {
+
+                        ZoneEntityV2::Doodad { ref name, ref transform, ref custom_props } => {
+
+                             spawn_doodad_event_writer.send({
+                                PlaceDoodadEvent {
+                                    doodad_name: name.clone(),
+                                    position: zone_entity.get_position(),
+                                    rotation_euler: Some(zone_entity.get_rotation_euler()),
+                                    scale: Some(zone_entity.get_scale()),
+                                    custom_props: zone_entity.get_custom_props().clone(),
+                                  //  clay_tile_block_data: zone_entity.clay_tile_block_data.clone(), 
+                                    zone:Some(created_zone)
+                                }
+                            });
+
+
+                        },
+                        ZoneEntityV2::ClayTile { ref transform,   ref clay_tile_block } => {
+
+                              spawn_clay_tile_event_writer.send({
+                                PlaceClayTileEvent {
+                                    //doodad_name: name.clone(),
+                                    position: zone_entity.get_position(),
+                                    rotation_euler: Some(zone_entity.get_rotation_euler()),
+                                    scale: Some(zone_entity.get_scale()),
+                                   // custom_props: zone_entity.get_custom_props().clone(),
+                                    clay_tile_block_data: clay_tile_block.clone(), 
+                                    zone:Some(created_zone)
+                                }
+                            });
+
+
+                        },
+                        ZoneEntityV2::Prefab { ref name, ref transform } => {
+
+                            spawn_prefab_event_writer.send(
+
+                                SpawnPrefabEvent {
+                                 position:zone_entity.get_position(),
+                                 rotation_euler: Some(zone_entity.get_rotation_euler()),
+                                  prefab_name: name.clone(), 
+                                  zone: Some(created_zone)
+                               }
+                            );
+
+
+
                         }
-                    });
+
+                    }
+
+
+                   
+
+
+
                 }
             }
         }
@@ -438,7 +492,7 @@ pub fn handle_save_zone_events(
             all_children.push(child);
         }*/
 
-        let mut zone_entities:Vec<ZoneEntity> = Vec::new();
+        let mut zone_entities:Vec<ZoneEntityV2> = Vec::new();
 
         let Some(zone_children) = zone_entity_ref.get::<Children>()  else {continue};
 
@@ -447,7 +501,7 @@ pub fn handle_save_zone_events(
 
             if let Some(child_entity_ref) = entity_ref_query.get( *child_entity ).ok() {
 
-                if let Some(zone_entity) = ZoneEntity::from_entity_ref( &child_entity_ref ) {
+                if let Some(zone_entity) = ZoneEntityV2::from_entity_ref( &child_entity_ref ) {
                     zone_entities.push(zone_entity);
                 }
             }

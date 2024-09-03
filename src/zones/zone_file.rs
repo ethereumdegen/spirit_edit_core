@@ -1,7 +1,9 @@
 use bevy::{prelude::*, utils::HashMap};
 use serde::{Deserialize, Serialize};
 
-use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock }; 
+use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock };
+
+use crate::prefabs::PrefabComponent; 
 
 #[derive(Serialize, Deserialize,Default)]
 pub struct ZoneFile {
@@ -152,7 +154,11 @@ impl ZoneEntityV2{
     }
 
     pub fn get_custom_props(&self) -> &Option<CustomPropsMap> {
-        &self.custom_props
+        match self {
+            Self::Doodad  { custom_props, .. } => custom_props,
+             
+            _ => &None,
+        }
     }
 
     pub fn from_entity_ref(
@@ -162,17 +168,52 @@ impl ZoneEntityV2{
         let Some(name_comp) = entity_ref.get::<Name>() else {return None};
         let Some(xform) = entity_ref.get::<Transform>() else {return None};
         let custom_props_component = entity_ref.get::<CustomPropsComponent>() ;
+      
+
         let clay_tile_block_data = entity_ref.get::<ClayTileBlock>() ;
+        let prefab_component = entity_ref.get::<PrefabComponent>();
+
+        if let Some( clay_tile_block_data ) = clay_tile_block_data {
+
+            return Some(  
+                ZoneEntityV2::ClayTile { transform: xform.clone().into(), clay_tile_block: clay_tile_block_data.clone() }
+            )
+
+        }
+
+
+
+        if prefab_component.is_some(){
+
+            return Some(  
+                ZoneEntityV2::Prefab { 
+                 name: name_comp.as_str().to_string(), 
+                 transform: xform.clone().into()
+             }
+            )
+
+        }
+
+
 
       //  if let Some((name, xform, custom_props_component, clay_tile_block_data)) = zone_entity_query.get(entity).ok() {
             let custom_props = custom_props_component.and_then(|comp| Some(comp.props.clone()));
 
-            return Some(Self {
+             return Some(  
+                ZoneEntityV2::Doodad { 
+                 name: name_comp.as_str().to_string(),
+                transform: xform.clone().into(),
+                custom_props,
+                 }
+            );
+
+
+            /*return Some(Self {
                 name: name_comp.as_str().to_string(),
                 transform: xform.clone().into(),
                 custom_props,
                 clay_tile_block_data: clay_tile_block_data.cloned()
-            });
+            });*/
      //   }
 
       //  None

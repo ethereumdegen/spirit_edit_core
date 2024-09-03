@@ -106,10 +106,24 @@ pub struct PlaceDoodadEvent {
     pub custom_props: Option<CustomPropsMap>,
     pub zone: Option<Entity> ,
 
-    pub clay_tile_block_data: Option<ClayTileBlock >, //dont love this but its K 
+  //  pub clay_tile_block_data: Option<ClayTileBlock >, //dont love this but its K 
     // pub doodad_definition: DoodadDefinition
 }
 
+
+
+#[derive(Event)]
+pub struct PlaceClayTileEvent {
+    pub position: Vec3,
+    pub scale: Option<Vec3>,
+    pub rotation_euler: Option<Vec3>,
+  //  pub doodad_name: String,
+   // pub custom_props: Option<CustomPropsMap>,
+    pub zone: Option<Entity> ,
+
+    pub clay_tile_block_data: ClayTileBlock , //dont love this but its K 
+    // pub doodad_definition: DoodadDefinition
+}
 
 // --------------------------------------------------------
 
