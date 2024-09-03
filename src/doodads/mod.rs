@@ -51,6 +51,7 @@ impl Plugin for DoodadPlugin {
          app
              .add_event::< picking::SelectDoodadEvent>()
              .add_event::< PlaceDoodadEvent>()
+              .add_event::< PlaceClayTileEvent>()
              .add_event::< DoodadToolEvent>()
 
              .init_resource::<DoodadToolState>()

@@ -35,9 +35,9 @@ pub struct ZoneResource {
 
 pub mod zone_file;
 
-use zone_file::ZoneFile;
+use zone_file::ZoneFileV2 as ZoneFile;
 
-use self::zone_file::ZoneEntityV2;
+use self::zone_file::ZoneEntityV2 as ZoneEntity;
 
 //use self::zone_file::CustomPropsComponent;
 
@@ -339,12 +339,12 @@ pub fn handle_zone_events(
                 };
 
 
-                let file_name = format!("assets/zones/{}.zone.ron", fixed_zone_name);
+                let file_name = format!("assets/zonesv2/{}.zone.ron", fixed_zone_name);
  
                  let path = Path::new(&file_name);
 
                 // Read the file into a string
-                let Ok(file_content) = std::fs::read_to_string(path) else {
+               /* let Ok(file_content) = std::fs::read_to_string(path) else {
                     println!("Could not find file {:?}", file_name);
                     return;
                 };
@@ -358,6 +358,11 @@ pub fn handle_zone_events(
                         eprintln!("Could not parse file {:?} {:?}", file_name, e); 
                         return;
                     }
+                };*/
+
+                let Some(zone_file) = ZoneFile::load_from_path(  path  ) else {
+                    eprintln!("could not parse zone file {:?}", path);
+                    return;
                 };
                
                 //spawnn the zone entity and set it as primary
@@ -377,7 +382,7 @@ pub fn handle_zone_events(
 
                     match zone_entity {
 
-                        ZoneEntityV2::Doodad { ref name, ref transform, ref custom_props } => {
+                        ZoneEntity::Doodad { ref name, ref transform, ref custom_props } => {
 
                              spawn_doodad_event_writer.send({
                                 PlaceDoodadEvent {
@@ -393,7 +398,7 @@ pub fn handle_zone_events(
 
 
                         },
-                        ZoneEntityV2::ClayTile { ref transform,   ref clay_tile_block } => {
+                        ZoneEntity::ClayTile { ref transform,   ref clay_tile_block } => {
 
                               spawn_clay_tile_event_writer.send({
                                 PlaceClayTileEvent {
@@ -409,7 +414,7 @@ pub fn handle_zone_events(
 
 
                         },
-                        ZoneEntityV2::Prefab { ref name, ref transform } => {
+                        ZoneEntity::Prefab { ref name, ref transform } => {
 
                             spawn_prefab_event_writer.send(
 
@@ -492,7 +497,7 @@ pub fn handle_save_zone_events(
             all_children.push(child);
         }*/
 
-        let mut zone_entities:Vec<ZoneEntityV2> = Vec::new();
+        let mut zone_entities:Vec<ZoneEntity> = Vec::new();
 
         let Some(zone_children) = zone_entity_ref.get::<Children>()  else {continue};
 
@@ -501,7 +506,7 @@ pub fn handle_save_zone_events(
 
             if let Some(child_entity_ref) = entity_ref_query.get( *child_entity ).ok() {
 
-                if let Some(zone_entity) = ZoneEntityV2::from_entity_ref( &child_entity_ref ) {
+                if let Some(zone_entity) = ZoneEntity::from_entity_ref( &child_entity_ref ) {
                     zone_entities.push(zone_entity);
                 }
             }

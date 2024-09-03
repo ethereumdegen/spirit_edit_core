@@ -29,7 +29,7 @@ impl Plugin for SpiritEditCorePlugin {
 
             .init_resource::<placement::PlacementToolsState>()
 
-
+             .add_event::<prefabs::SpawnPrefabEvent>()
             .add_event::<ZoneEvent>()
             .add_event::<SaveZoneToFileEvent>()
            

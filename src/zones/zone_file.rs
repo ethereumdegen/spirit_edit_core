@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use bevy::{prelude::*, utils::HashMap};
 use serde::{Deserialize, Serialize};
 
@@ -5,11 +7,80 @@ use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock };
 
 use crate::prefabs::PrefabComponent; 
 
-#[derive(Serialize, Deserialize,Default)]
+
+#[derive(Serialize, Deserialize,Default,Clone,Debug)]
 pub struct ZoneFile {
+    pub translation_offset: Option<Vec3>, 
+    pub entities: Vec<ZoneEntity>, 
+}  
+
+impl ZoneFile {
+
+     pub fn load_from_path(path: &Path) -> Option<Self> {
+
+         let Ok(file_content) = std::fs::read_to_string(path) else {
+                    eprintln!("Could not find file {:?}", path);
+                    return None;
+                };
+
+
+        let zone_file = match ron::from_str::<Self>(&file_content) {
+
+            Ok(f) => f ,
+
+            Err(e) =>  {
+                eprintln!("Could not parse file {:?} {:?}", path, e); 
+                return None;
+            }
+        };
+
+        Some(zone_file)
+
+    }
+
+
+}
+
+
+#[derive(Serialize, Deserialize,Default,Clone,Debug)]
+pub struct ZoneFileV2 {
     pub translation_offset: Option<Vec3>, 
     pub entities: Vec<ZoneEntityV2>, 
 }
+
+impl ZoneFileV2 {
+
+   pub fn from_zone_file(zone_file: ZoneFile) -> Self {
+        ZoneFileV2 {
+            translation_offset: zone_file.translation_offset,
+            entities: zone_file.entities.into_iter().map(ZoneEntityV2::from_zone_entity).collect(),
+        }
+    }
+
+    pub fn load_from_path(path: &Path) -> Option<Self> {
+
+         let Ok(file_content) = std::fs::read_to_string(path) else {
+                    eprintln!("Could not find file {:?}", path);
+                    return None;
+                };
+
+
+        let zone_file = match ron::from_str::<Self>(&file_content) {
+
+            Ok(f) => f ,
+
+            Err(e) =>  {
+                eprintln!("Could not parse file {:?} {:?}", path, e); 
+                return None;
+            }
+        };
+
+        Some(zone_file)
+
+    }
+}
+
+
 
 /*
 impl ZoneFile {
@@ -97,7 +168,7 @@ impl std::fmt::Display for CustomProp {
 
 //pub struct StringSpecial; 
 
-#[derive(Serialize, Deserialize,Component)]
+#[derive(Serialize, Deserialize,Component,Clone,Debug)]
  pub enum ZoneEntityV2 {
     Doodad {
 
@@ -130,6 +201,27 @@ impl std::fmt::Display for CustomProp {
 
 
 impl ZoneEntityV2{
+
+    pub fn from_zone_entity(zone_entity: ZoneEntity) -> Self{
+
+        if let Some(clay_tile_block_data) = zone_entity.clay_tile_block_data {
+
+            return Self::ClayTile { 
+                transform : zone_entity.transform.clone(),
+                 clay_tile_block: clay_tile_block_data.clone() 
+             }
+        }else {
+
+
+            return Self::Doodad { 
+                name: zone_entity.name.clone(), 
+                transform:  zone_entity.transform.clone(),
+               custom_props: zone_entity.custom_props
+            .clone()
+             }
+        }
+
+    }
 
 
 
@@ -222,11 +314,9 @@ impl ZoneEntityV2{
 
 }
 
- /*
 
 
-
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize,Clone,Debug)]
 pub struct ZoneEntity {
     pub name: String,
 
@@ -239,6 +329,12 @@ pub struct ZoneEntity {
     pub clay_tile_block_data: Option<ClayTileBlock>,
 
 }
+
+
+ /*
+
+
+
 
 impl ZoneEntity {
     pub fn get_position(&self) -> Vec3 {
