@@ -541,13 +541,12 @@ dependencies = [
 
 [[package]]
 name = "bevy_clay_tiles"
-version = "0.14.15"
+version = "0.14.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20ab5025262c66100b34596bb13565ebce60cf271d99d71843bc91e81ccfce49"
+checksum = "39fc8da6045dc187a188bd6de7f08cd1235d60db295821128f6975a40fcd03e5"
 dependencies = [
  "anyhow",
  "bevy 0.14.1",
- "bevy_material_tool",
  "bevy_mod_raycast",
  "bevy_mod_sysfail",
  "futures-lite 1.13.0",
@@ -1079,17 +1078,6 @@ dependencies = [
  "quote",
  "syn 2.0.75",
  "toml_edit 0.22.20",
-]
-
-[[package]]
-name = "bevy_material_tool"
-version = "0.14.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf547969277dc2a1694e227eac38ebb0514469bd5424dc436e601e699b8b1ae5"
-dependencies = [
- "bevy 0.14.1",
- "ron",
- "serde",
 ]
 
 [[package]]
