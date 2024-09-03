@@ -6,7 +6,7 @@ use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock };
 #[derive(Serialize, Deserialize,Default)]
 pub struct ZoneFile {
     pub translation_offset: Option<Vec3>, 
-    pub entities: Vec<ZoneEntity>, 
+    pub entities: Vec<ZoneEntityV2>, 
 }
 
 /*
@@ -95,8 +95,93 @@ impl std::fmt::Display for CustomProp {
 
 //pub struct StringSpecial; 
 
+#[derive(Serialize, Deserialize,Component)]
+ pub enum ZoneEntityV2 {
+    Doodad {
 
- 
+
+          name: String,
+
+          transform: TransformSimple,
+
+          custom_props: Option<CustomPropsMap>,
+
+    },
+    ClayTile  {
+
+          //name: String,
+
+          transform: TransformSimple,
+
+          clay_tile_block: ClayTileBlock,
+    } ,
+    Prefab{
+
+
+          name: String,
+
+          transform: TransformSimple,
+
+    }
+
+ }
+
+
+impl ZoneEntityV2{
+
+
+
+    pub fn get_transform_simple(&self) -> &TransformSimple {
+        match self {
+            Self::Doodad  { transform, .. } => transform,
+            Self::ClayTile  { transform, .. } => transform,
+            Self::Prefab  { transform, .. } => transform,
+        }
+    }
+
+    pub fn get_position(&self) -> Vec3 {
+        self.get_transform_simple().translation
+    }
+
+    pub fn get_rotation_euler(&self) -> Vec3 {
+        self.get_transform_simple().rotation
+    }
+
+    pub fn get_scale(&self) -> Vec3 {
+        self.get_transform_simple().scale
+    }
+
+    pub fn get_custom_props(&self) -> &Option<CustomPropsMap> {
+        &self.custom_props
+    }
+
+    pub fn from_entity_ref(
+        entity_ref: &EntityRef 
+        ) -> Option<Self> {
+
+        let Some(name_comp) = entity_ref.get::<Name>() else {return None};
+        let Some(xform) = entity_ref.get::<Transform>() else {return None};
+        let custom_props_component = entity_ref.get::<CustomPropsComponent>() ;
+        let clay_tile_block_data = entity_ref.get::<ClayTileBlock>() ;
+
+      //  if let Some((name, xform, custom_props_component, clay_tile_block_data)) = zone_entity_query.get(entity).ok() {
+            let custom_props = custom_props_component.and_then(|comp| Some(comp.props.clone()));
+
+            return Some(Self {
+                name: name_comp.as_str().to_string(),
+                transform: xform.clone().into(),
+                custom_props,
+                clay_tile_block_data: clay_tile_block_data.cloned()
+            });
+     //   }
+
+      //  None
+
+    } 
+
+}
+
+ /*
 
 
 
@@ -174,6 +259,8 @@ impl ZoneEntity {
         None
     }*/
 }
+
+*/
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TransformSimple {

@@ -10,6 +10,7 @@ pub use bevy_clay_tiles; // export
 pub mod doodads;
 pub mod zones;
 pub mod placement;
+pub mod prefabs;
 
 
 pub struct SpiritEditCorePlugin {}
