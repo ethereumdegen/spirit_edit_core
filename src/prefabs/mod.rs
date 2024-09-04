@@ -10,6 +10,33 @@ pub struct PrefabComponent ;
  
 
 
+
+pub fn prefab_plugin(  app: &mut App ){
+
+    app 
+    .init_resource::<PrefabToolState>()
+
+    ;
+}
+
+
+#[derive(Resource, Default)]
+pub struct PrefabToolState {
+    pub selected: Option<String>,
+}
+
+
+
+#[derive(Event)]
+pub enum PrefabToolEvent {
+    SetSelectedPrefab(Option<String>)
+}
+
+
+
+
+
+
 #[derive(Event)]
 pub struct SavePrefabToFileEvent(pub Entity) ;
 

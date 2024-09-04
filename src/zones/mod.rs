@@ -391,7 +391,7 @@ pub fn handle_zone_events(
                                     scale: Some(zone_entity.get_scale()),
                                     custom_props: zone_entity.get_custom_props().clone(),
                                   //  clay_tile_block_data: zone_entity.clay_tile_block_data.clone(), 
-                                    zone:Some(created_zone)
+                                    force_parent:Some(created_zone)
                                 }
                             });
 

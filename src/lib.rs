@@ -2,7 +2,7 @@
  
 use bevy::prelude::*;
 
-use doodads::DoodadPlugin;
+ 
 use zones::{zone_file::{CustomProp, CustomPropsComponent},  ZoneEvent,SaveZoneToFileEvent };
 
 pub use bevy_clay_tiles; // export
@@ -20,7 +20,8 @@ impl Plugin for SpiritEditCorePlugin {
          app
            	
 
-             .add_plugins(DoodadPlugin {})
+             .add_plugins(doodads::doodad_plugin)
+             .add_plugins(prefabs::prefab_plugin)
             
 
            	 .add_event::<placement::PlacementEvent>()

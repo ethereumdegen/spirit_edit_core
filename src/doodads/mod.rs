@@ -43,10 +43,8 @@ pub mod doodad;
 pub mod rotate;
 //pub mod doodad_placement_preview;
 
-
-pub struct DoodadPlugin {}
-impl Plugin for DoodadPlugin {
-    fn build(&self, app: &mut App) {
+pub fn doodad_plugin(  app: &mut App ){
+ 
         //put this inside of zone plugin ?
          app
              .add_event::< picking::SelectDoodadEvent>()
@@ -68,7 +66,7 @@ impl Plugin for DoodadPlugin {
            
 
             ;
-    }
+    
 }
 
 
@@ -105,7 +103,7 @@ pub struct PlaceDoodadEvent {
     pub rotation_euler: Option<Vec3>,
     pub doodad_name: String,
     pub custom_props: Option<CustomPropsMap>,
-    pub zone: Option<Entity> ,
+    pub force_parent: Option<Entity> ,
 
   //  pub clay_tile_block_data: Option<ClayTileBlock >, //dont love this but its K 
     // pub doodad_definition: DoodadDefinition
