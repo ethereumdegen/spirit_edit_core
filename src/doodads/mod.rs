@@ -17,7 +17,7 @@ use bevy::utils::HashMap;
 use crate::doodads::doodad_manifest::RenderableType;
  
 use crate::zones::zone_file::{CustomPropsComponent,CustomPropsMap};
-use crate::zones::ZoneResource;
+ 
 
 /*
 use bevy_editor_pls_core::editor_window::{EditorWindow, EditorWindowContext};

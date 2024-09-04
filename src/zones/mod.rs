@@ -1,3 +1,4 @@
+use crate::placement::PlacementEvent;
 use crate::prefabs::SpawnPrefabEvent;
 use crate::{doodads::PlaceClayTileEvent };
 use bevy_clay_tiles::clay_tile_block::ClayTileBlock;
@@ -14,12 +15,12 @@ pub struct ZoneComponent {}
 
 #[derive(Event)]
 pub enum ZoneEvent {
-    SetZoneAsPrimary(Entity),
+   // SetZoneAsPrimary(Entity),
    // SaveZoneToFile(Entity),
     SaveAllZones,
     CreateNewZone(String),
     LoadZoneFile(String),
-    ResetPrimaryZone,
+    //ResetPrimaryZone,
 }
 
 
@@ -27,11 +28,6 @@ pub enum ZoneEvent {
 pub struct SaveZoneToFileEvent(pub Entity) ;
 
 
-
-#[derive(Resource, Default)]
-pub struct ZoneResource {
-    pub primary_zone: Option<Entity>,
-}
 
 pub mod zone_file;
 
@@ -229,7 +225,7 @@ pub fn handle_zone_events(
     mut commands: Commands,
     mut evt_reader: EventReader<ZoneEvent>,
 
-    mut zone_resource: ResMut<ZoneResource>,
+     
 
     children_query: Query<&Children, With<Name>>,   
 
@@ -242,6 +238,8 @@ pub fn handle_zone_events(
      With<ZoneComponent>>, 
 
     mut save_zone_evt_writer: EventWriter<SaveZoneToFileEvent>,
+
+    mut placement_evt_writer: EventWriter<PlacementEvent>,
 
     mut spawn_doodad_event_writer: EventWriter<PlaceDoodadEvent>,
 
@@ -258,15 +256,12 @@ pub fn handle_zone_events(
                     .insert(Name::new(name.to_string()))
                     .id();
 
-                zone_resource.primary_zone = Some(created_zone);
+                placement_evt_writer.send(PlacementEvent::SetPlacementParent( Some(created_zone) ));
+
+               // zone_resource.primary_zone = Some(created_zone);
             }
 
-            ZoneEvent::SetZoneAsPrimary(ent) => {
-                zone_resource.primary_zone = Some(ent.clone());
-            }
-            ZoneEvent::ResetPrimaryZone => {
-                zone_resource.primary_zone = None;
-            }
+            
             ZoneEvent::SaveAllZones => {
                 
                 for zone_entity in zone_entity_query.iter(){
@@ -374,7 +369,11 @@ pub fn handle_zone_events(
                     
                     .id();
 
-                zone_resource.primary_zone = Some(created_zone);
+
+                placement_evt_writer.send(PlacementEvent::SetPlacementParent( Some(created_zone) ));
+
+
+                 
 
                 //trigger spawn doodad events
 
@@ -451,16 +450,7 @@ pub fn handle_save_zone_events(
 
     entity_ref_query: Query<EntityRef>  ,
 
-      //children_query: Query<&Children, With<Name>>, 
-
-   /* mut zone_resource: ResMut<ZoneResource>,
-
-    children_query: Query<&Children, With<Name>>,   
-
-    //change me to entity ref ..
-    zone_entity_query: Query<(&Name, &Transform, Option<&CustomPropsComponent>, Option<&ClayTileBlock>)>, 
-
-    mut spawn_doodad_event_writer: EventWriter<PlaceDoodadEvent>,*/
+      
 ) {
     for evt in evt_reader.read() {
 
@@ -523,7 +513,7 @@ pub fn handle_save_zone_events(
             ..default()
         };
 
-        let zone_file_name = format!("assets/zones/{}.zone.ron", fixed_zone_name);
+        let zone_file_name = format!("assets/zonesv2/{}.zone.ron", fixed_zone_name);
 
         let ron = ron::ser::to_string(&zone_file).unwrap();
         let file_saved = std::fs::write(zone_file_name, ron);

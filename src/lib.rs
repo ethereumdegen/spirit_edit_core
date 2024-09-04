@@ -3,7 +3,7 @@
 use bevy::prelude::*;
 
 use doodads::DoodadPlugin;
-use zones::{zone_file::{CustomProp, CustomPropsComponent},  ZoneEvent,SaveZoneToFileEvent, ZoneResource};
+use zones::{zone_file::{CustomProp, CustomPropsComponent},  ZoneEvent,SaveZoneToFileEvent };
 
 pub use bevy_clay_tiles; // export
 
@@ -32,18 +32,20 @@ impl Plugin for SpiritEditCorePlugin {
              .add_event::<prefabs::SpawnPrefabEvent>()
             .add_event::<ZoneEvent>()
             .add_event::<SaveZoneToFileEvent>()
+            .add_event::<prefabs::SavePrefabToFileEvent>()
            
             .register_type::<CustomPropsComponent>() //reflect
               .register_type::<CustomProp>() //reflect
            
-            .init_resource::<ZoneResource>() 
-
+           
            
          
             
             .add_systems(Update, (
                 zones::handle_zone_events,
-                zones::handle_save_zone_events
+                zones::handle_save_zone_events,
+                prefabs::handle_save_prefab_events, 
+                placement::handle_placement_events,
             ).chain())
 
 

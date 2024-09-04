@@ -1,13 +1,13 @@
 
+use crate::{prefabs::prefab_file::PrefabFile, zones::zone_file::ZoneEntityV2 as ZoneEntity};
 use bevy::prelude::*;
 
 pub mod prefab_file;
+pub mod prefab_definitions;
 
 #[derive(Component)]
 pub struct PrefabComponent ;
-
-
-
+ 
 
 
 #[derive(Event)]
@@ -30,3 +30,86 @@ pub struct SpawnPrefabEvent {
 
 
 } 
+
+
+
+pub fn handle_save_prefab_events(
+  //  mut commands: Commands,
+    mut evt_reader: EventReader<SavePrefabToFileEvent>,
+
+    entity_ref_query: Query<EntityRef>  ,
+
+      
+) {
+    for evt in evt_reader.read() {
+
+        let ent = evt.0;
+
+        let Some(prefab_entity_ref) = entity_ref_query.get(ent).ok() else {continue};
+          
+        //this is kind of wacky but we are using this as a poor mans name query
+        let Some(prefab_name_comp) = prefab_entity_ref.get::<Name>() else {
+            return;
+        };
+
+        let prefab_name: &str = prefab_name_comp.as_str();
+
+
+        let fixed_prefab_name = match prefab_name.ends_with( "prefab.ron" ) || prefab_name.ends_with( "prefab" ){
+
+            true => {
+
+                  let   parts: Vec<&str> = prefab_name.split('.').collect();
+                 
+                    parts.first().unwrap() .to_string()  
+                   
+
+              }, 
+            false => prefab_name.to_string()
+
+        };
+        
+
+       // let mut all_children: Vec<Entity> = Vec::new();
+
+        /*for child in DescendantIter::new(&children_query, ent.clone()) {
+            all_children.push(child);
+        }*/
+
+        let mut zone_entities:Vec<ZoneEntity> = Vec::new();
+
+        let Some(zone_children) = prefab_entity_ref.get::<Children>()  else {continue};
+
+        for child_entity in zone_children {
+
+
+            if let Some(child_entity_ref) = entity_ref_query.get( *child_entity ).ok() {
+
+                if let Some(zone_entity) = ZoneEntity::from_entity_ref( &child_entity_ref ) {
+                    zone_entities.push(zone_entity);
+                }
+            }
+
+
+        }
+
+
+
+
+        let prefab_file = PrefabFile {
+
+            entities: zone_entities,
+
+            ..default()
+        };
+
+        let zone_file_name = format!("assets/prefabs/{}.prefab.ron", fixed_prefab_name);
+
+        let ron = ron::ser::to_string(&prefab_file).unwrap();
+        let file_saved = std::fs::write(zone_file_name, ron);
+
+        println!("exported prefab ! {:?}", file_saved);
+            
+    }
+}
+
