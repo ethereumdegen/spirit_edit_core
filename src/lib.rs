@@ -12,6 +12,7 @@ pub mod zones;
 pub mod placement;
 pub mod prefabs;
 
+pub mod gltf_models;
 
 pub struct SpiritEditCorePlugin {}
 impl Plugin for SpiritEditCorePlugin {
@@ -22,7 +23,7 @@ impl Plugin for SpiritEditCorePlugin {
 
              .add_plugins(doodads::doodad_plugin)
              .add_plugins(prefabs::prefab_plugin)
-            
+             .add_plugins(gltf_models::gltf_models_plugin   )
 
            	 .add_event::<placement::PlacementEvent>()
            	
@@ -36,7 +37,7 @@ impl Plugin for SpiritEditCorePlugin {
             .add_event::<prefabs::SavePrefabToFileEvent>()
            
             .register_type::<CustomPropsComponent>() //reflect
-              .register_type::<CustomProp>() //reflect
+            .register_type::<CustomProp>() //reflect
            
            
            

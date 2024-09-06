@@ -86,7 +86,8 @@ pub struct DoodadDefinition {
     pub tags: Option<Vec<String>> ,
     pub snap_dimensions: Option<Vec2>, 
 
-    pub material_override: Option<String>
+    pub material_override: Option<String>,
+    pub material_replacement_set: Option<  String  >
 }
 /*
 impl DoodadManifest {
