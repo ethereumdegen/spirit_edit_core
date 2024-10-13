@@ -39,7 +39,7 @@ pub struct DoodadTagMapResource {
 #[derive(Asset,  Clone, Debug, Serialize, Deserialize)]
 pub struct DoodadManifest {
   //  pub doodad_tags: Vec<String>,
-    pub doodad_definitions: HashMap<DoodadName,DoodadDefinition>,
+    pub spawnables: HashMap<DoodadName,DoodadDefinition>,
 }
 
 
@@ -58,7 +58,7 @@ impl DoodadManifest {
     pub fn get_doodad_definition_by_name(&self, name: &str) -> Option<DoodadDefinition> {
      
 
-        return self.doodad_definitions.get(name).cloned();
+        return self.spawnables.get(name).cloned();
 
         
     }
