@@ -132,6 +132,28 @@ impl CustomPropsComponent {
         }
 
     }
+
+
+     pub fn duplicated(& self ) -> Self {
+
+
+        let duplicated_keys = vec!["material_override"];
+
+        let mut  new_props = HashMap::new();
+
+        for (key,val) in self.props.iter(){
+
+            if duplicated_keys.contains( & key .as_str() ){
+
+
+                new_props.insert(key.to_string(), val.clone()) ;
+            }
+        }
+
+
+        Self { props: new_props }
+
+    }
 }
 
 pub type CustomPropsMap = HashMap<String, CustomProp>;
