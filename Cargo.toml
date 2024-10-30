@@ -23,14 +23,14 @@ bevy = "0.15.0-rc.2"
 bevy_egui = "0.28"
 
 # these are upstreamed IN bevy now ? 
-bevy_mod_raycast = "0.18.0"
-bevy_mod_picking = "0.20.0" 
+#bevy_mod_raycast = "0.18.0"
+#bevy_mod_picking = "0.20.0" 
  
 
  # need to keep this updated  !  a pain .. 
- bevy_clay_tiles = "0.15.1"
+ #bevy_clay_tiles = "0.15.1"
 
- #bevy_clay_tiles =  {path="../bevy_clay_tiles"}
+  bevy_clay_tiles =  {path="../bevy_clay_tiles"}
 
 serde = { version = "1", features = ["derive"] }
   

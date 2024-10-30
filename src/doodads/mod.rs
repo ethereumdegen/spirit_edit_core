@@ -8,7 +8,7 @@ use bevy::{asset::ReflectAsset, reflect::TypeRegistry};
 
 use bevy::prelude::*;
 use bevy_egui::EguiContexts;
-use bevy_mod_raycast::immediate::RaycastSettings;
+//use bevy_mod_raycast::immediate::RaycastSettings;
 use rand::Rng;
 
 use bevy::utils::HashMap;
@@ -26,11 +26,7 @@ use bevy_inspector_egui::bevy_egui::EguiContexts;
 use bevy_inspector_egui::egui::{self, ScrollArea};*/
 
 use bevy_common_assets::ron::RonAssetPlugin;
-
-use bevy_mod_raycast::cursor::CursorRay;
-
-use bevy_mod_raycast::prelude::Raycast;
-
+ 
 use self::doodad::{DoodadComponent,    };
 use self::doodad_manifest::{DoodadDefinition, DoodadManifest, DoodadDefinitionsResource, DoodadTagMapResource};
 //use self::doodad_placement_preview::DoodadPlacementComponent;

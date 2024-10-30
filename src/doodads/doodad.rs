@@ -5,7 +5,7 @@ use super::{  doodad_manifest::{DoodadDefinition, RenderableType}};
 
 //use bevy_mod_sysfail::*;
 
-use bevy_mod_picking::prelude::*;
+//use bevy_mod_picking::prelude::*;
  
 
 
