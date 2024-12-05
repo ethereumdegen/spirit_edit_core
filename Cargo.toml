@@ -20,7 +20,7 @@ exclude = ["assets"]
 bevy = "0.15.0"
 
 
-bevy_egui = "0.28"
+bevy_egui = "0.31"
 
 # these are upstreamed IN bevy now ? 
 #bevy_mod_raycast = "0.18.0"
