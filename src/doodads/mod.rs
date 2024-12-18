@@ -100,6 +100,7 @@ pub struct PlaceDoodadEvent {
     pub doodad_name: String,
     pub custom_props: Option<CustomPropsMap>,
     pub force_parent: Option<Entity> ,
+    pub auto_select: bool
 
   //  pub clay_tile_block_data: Option<ClayTileBlock >, //dont love this but its K 
     // pub doodad_definition: DoodadDefinition

@@ -251,7 +251,7 @@ pub fn handle_zone_events(
         match evt {
             ZoneEvent::CreateNewZone(name) => {
                 let created_zone = commands
-                    .spawn(SpatialBundle::default())
+                    .spawn((Transform::default(),Visibility::default()))
                     .insert(ZoneComponent {})
                     .insert(Name::new(name.to_string()))
                     .id();
@@ -363,7 +363,7 @@ pub fn handle_zone_events(
                 //spawnn the zone entity and set it as primary
 
                 let created_zone = commands
-                    .spawn(SpatialBundle::default())
+                    .spawn((Transform::default(),Visibility::default()))
                     .insert(ZoneComponent {})
                     .insert(Name::new(zone_name.to_string()))
                     
@@ -391,7 +391,8 @@ pub fn handle_zone_events(
                                     scale: Some(zone_entity.get_scale()),
                                     custom_props: zone_entity.get_custom_props().clone(),
                                   //  clay_tile_block_data: zone_entity.clay_tile_block_data.clone(), 
-                                    force_parent:Some(created_zone)
+                                    force_parent:Some(created_zone),
+                                    auto_select: false 
                                 }
                             });
 
