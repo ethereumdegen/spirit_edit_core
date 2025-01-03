@@ -466,6 +466,8 @@ pub fn handle_save_zone_events(
 
         let zone_name: &str = zone_name_comp.as_str();
 
+        println!("handle save zone.." );
+
 
         let fixed_zone_name = match zone_name.ends_with( "zone.ron" ) || zone_name.ends_with( "zone" ){
 
@@ -490,7 +492,15 @@ pub fn handle_save_zone_events(
 
         let mut zone_entities:Vec<ZoneEntity> = Vec::new();
 
-        let Some(zone_children) = zone_entity_ref.get::<Children>()  else {continue};
+       /* let  Some(zone_children)  = zone_entity_ref.get::<Children>()  else {
+
+            warn!( "cannot save an empty zone.."  );
+            continue
+        };*/
+
+        let   zone_children   = zone_entity_ref.get::<Children>()  ;
+
+        let zone_children = zone_children.map(|c| c.into_iter().collect::<Vec<_>>() ).unwrap_or_default(); 
 
         for child_entity in zone_children {
 
