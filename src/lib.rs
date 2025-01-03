@@ -12,6 +12,9 @@ pub mod zones;
 pub mod placement;
 pub mod prefabs;
 
+
+mod utils;
+
 pub mod gltf_models;
 
 pub struct SpiritEditCorePlugin {}

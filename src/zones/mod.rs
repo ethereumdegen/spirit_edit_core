@@ -1,3 +1,4 @@
+use crate::utils::StringUtilsExt;
 use crate::placement::PlacementEvent;
 use crate::prefabs::SpawnPrefabEvent;
 use crate::{doodads::PlaceClayTileEvent };
@@ -250,10 +251,13 @@ pub fn handle_zone_events(
     for evt in evt_reader.read() {
         match evt {
             ZoneEvent::CreateNewZone(name) => {
+
+                let name_fixed =  name.ensure_ends_with(".zone");
+
                 let created_zone = commands
                     .spawn((Transform::default(),Visibility::default()))
                     .insert(ZoneComponent {})
-                    .insert(Name::new(name.to_string()))
+                    .insert(Name::new( name_fixed .to_string()))
                     .id();
 
                 placement_evt_writer.send(PlacementEvent::SetPlacementParent( Some(created_zone) ));
