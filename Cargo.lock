@@ -4606,7 +4606,7 @@ dependencies = [
 
 [[package]]
 name = "spirit_edit_core"
-version = "0.15.4"
+version = "0.15.5"
 dependencies = [
  "bevy",
  "bevy_clay_tiles",
