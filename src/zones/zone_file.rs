@@ -476,4 +476,37 @@ impl TransformSimple {
             scale: self.scale,
         }
     }
+
+
+    pub fn mul_transform_simple(&self , rhs : &TransformSimple ) -> TransformSimple {
+        // Convert Euler angles to quaternions for rotation
+        let lhs_quat = Quat::from_euler(EulerRot::YXZ, self.rotation.x, self.rotation.y, self.rotation.z);
+        let rhs_quat = Quat::from_euler(EulerRot::YXZ, rhs.rotation.x, rhs.rotation.y, rhs.rotation.z);
+
+        // Combine scales
+        let scale = self.scale * rhs.scale;
+
+        // Rotate the lhs translation by the rhs rotation, then scale it
+        let rotated_translation = rhs_quat * self.translation;
+        let scaled_translation = rotated_translation * rhs.scale;
+
+        // Combine translations
+        let translation = scaled_translation + rhs.translation;
+
+        // Combine rotations
+        let rotation_quat = lhs_quat * rhs_quat;
+
+        // Convert combined quaternion back to Euler angles
+        let (yaw, pitch, roll) = rotation_quat.to_euler(EulerRot::YXZ);
+        let rotation = Vec3::new(yaw, pitch, roll);
+
+        TransformSimple {
+            translation,
+            rotation,
+            scale,
+        }
+
+
+
+    }
 }
