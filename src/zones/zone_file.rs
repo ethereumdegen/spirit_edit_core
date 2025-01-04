@@ -1,3 +1,4 @@
+use std::f32::consts::PI;
 use std::path::Path;
 
 use bevy::{prelude::*, utils::HashMap};
@@ -444,6 +445,35 @@ impl From<Transform> for TransformSimple {
             translation,
             rotation: Vec3::new(yaw, pitch, roll ), 
             scale,
+        }
+    }
+}
+
+
+
+impl TransformSimple {
+    pub fn lerp(&self, other: &TransformSimple, factor: f32) -> TransformSimple {
+        TransformSimple {
+            translation: self.translation.lerp(other.translation, factor),
+            rotation: self.rotation.lerp(other.rotation, factor),
+            scale: self.scale.lerp(other.scale, factor),
+        }
+    }
+
+    //assumes the input is degrees !!
+    pub fn to_transform(&self) -> Transform {
+        // Convert Euler angles (yaw, pitch, roll) back to a quaternion for rotation
+        let yaw = self.rotation.x * (PI / 180.0);
+        let pitch = self.rotation.y * (PI / 180.0);
+        let roll = self.rotation.z * (PI / 180.0);
+
+        let quat = Quat::from_euler(bevy::math::EulerRot::YXZ, yaw, pitch, roll);
+
+        // Construct and return the Transform
+        Transform {
+            translation: self.translation,
+            rotation: quat,
+            scale: self.scale,
         }
     }
 }
