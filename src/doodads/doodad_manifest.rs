@@ -66,6 +66,9 @@ impl DoodadManifest {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum RenderableType {
+
+    NoModel, // none at all !  should have used an option.. oh well 
+
     GltfModel(String), //the path
     CubeShape(CubeShapeDefinition),
     MagicFx(String),
