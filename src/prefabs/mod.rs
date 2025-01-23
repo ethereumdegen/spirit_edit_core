@@ -16,6 +16,7 @@ pub fn prefab_plugin(  app: &mut App ){
     app 
     .init_resource::<PrefabToolState>()
 
+
     ;
 }
 
@@ -30,6 +31,17 @@ pub struct PrefabToolState {
 #[derive(Event)]
 pub enum PrefabToolEvent {
     SetSelectedPrefab(Option<String>)
+}
+
+
+
+#[derive(Event)]
+pub enum PrefabEvent {
+   
+    SaveAllPrefabs,
+ //   CreateNewZone(String),
+ //   LoadZoneFile(String),
+   
 }
 
 
@@ -57,6 +69,60 @@ pub struct SpawnPrefabEvent {
 
 
 } 
+
+pub fn handle_prefab_events(  
+
+
+    mut prefab_evt_reader: EventReader<PrefabEvent>,
+
+
+    prefab_entity_query: Query<
+      Entity,
+         
+         With<PrefabComponent>>, 
+
+    mut commands : Commands , 
+
+) {
+
+    for evt in prefab_evt_reader.read ()  {
+
+
+
+
+
+        match evt {
+
+
+            PrefabEvent::SaveAllPrefabs => {
+
+
+                for prefab_entity in prefab_entity_query.iter(){
+
+
+                    commands.send_event( SavePrefabToFileEvent ( prefab_entity.clone() ) );
+
+                    
+                }
+
+
+
+            }
+
+
+        }
+
+
+
+
+
+    }
+
+
+
+
+}
+
 
 
 

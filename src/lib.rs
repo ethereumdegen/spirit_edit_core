@@ -34,6 +34,7 @@ impl Plugin for SpiritEditCorePlugin {
 
             .init_resource::<placement::PlacementToolsState>()
 
+             .add_event::<prefabs::PrefabEvent>()
              .add_event::<prefabs::SpawnPrefabEvent>()
             .add_event::<ZoneEvent>()
             .add_event::<SaveZoneToFileEvent>()
@@ -49,6 +50,7 @@ impl Plugin for SpiritEditCorePlugin {
             .add_systems(Update, (
                 zones::handle_zone_events,
                 zones::handle_save_zone_events,
+                prefabs::handle_prefab_events ,
                 prefabs::handle_save_prefab_events, 
                 placement::handle_placement_events,
             ).chain())

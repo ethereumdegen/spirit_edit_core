@@ -73,7 +73,8 @@ pub enum RenderableType {
     CubeShape(CubeShapeDefinition),
     MagicFx(String),
     Decal(String),
-    LiquidPlane(String)
+    LiquidPlane(String),
+    ParticleFx(String) ,  //renders as a cube in editor ?
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
