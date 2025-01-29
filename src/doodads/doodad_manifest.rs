@@ -1,5 +1,6 @@
 
 
+use std::collections::BTreeMap;
 use crate::zones::zone_file::CustomPropsMap;
 use bevy::utils::HashMap;
 use std::{
@@ -32,7 +33,7 @@ impl DoodadDefinitionsResource {
 #[derive(Resource, Default)]
 pub struct DoodadTagMapResource {
     
-    pub doodad_tag_map: HashMap< String, Vec<DoodadName>  >
+     pub doodad_tag_map: BTreeMap< String, Vec<DoodadName>  >  //maintains sorting but slower 
 }
 
 
