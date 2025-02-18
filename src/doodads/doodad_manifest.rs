@@ -80,7 +80,7 @@ pub enum RenderableType {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct CubeShapeDefinition {
-    pub color: LinearRgba,
+    pub color: Color,
     pub wireframe: bool 
 }
 
