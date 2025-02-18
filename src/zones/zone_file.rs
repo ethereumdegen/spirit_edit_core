@@ -429,6 +429,18 @@ pub struct TransformSimple {
     pub scale: Vec3,
 }
 
+
+impl Default for TransformSimple {
+    fn default() -> Self {
+        Self {
+            translation: (0.0, 0.0, 0.0).into(),
+            rotation: (0.0, 0.0, 0.0).into(),
+            scale: (1.0, 1.0, 1.0).into(),
+        }
+    }
+}
+
+
 impl From<Transform> for TransformSimple {
     fn from(transform: Transform) -> Self {
         // Extract translation directly
