@@ -1,10 +1,46 @@
 
 
+#[derive(Component, Debug,Default)]
+pub struct RotateByDegrees( pub Vec3 );
 
-use crate::doodads::doodad::RotateByDegrees;
+//use crate::doodads::doodad::RotateByDegrees;
 use bevy::prelude::*;
 
 
+
+// yaw is Y 
+
+// pitch is X 
+
+
+
+impl EntityCommand for RotateByDegrees {
+
+
+
+	fn apply(self, entity:  Entity, world: &mut World) {  
+
+		if let Some(mut xform) = world.get_mut::<Transform>(entity) {
+
+
+			let degrees_amounts = self.0; 
+			//let deg = rotate_comp.0;
+
+		//let rads =  deg.to_radians() ;
+
+			xform.rotate_local_x( degrees_amounts.x.to_radians() );
+			xform.rotate_local_y( degrees_amounts.y.to_radians() );
+
+			xform.rotate_local_z( degrees_amounts.z.to_radians() );
+
+		}
+
+
+
+	}
+}
+
+/*
 
 pub fn handle_rotate_by_degrees(
 
@@ -33,4 +69,4 @@ pub fn handle_rotate_by_degrees(
 
 
 
-}
+}*/

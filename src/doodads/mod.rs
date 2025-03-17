@@ -54,7 +54,7 @@ pub fn doodad_plugin(  app: &mut App ){
              .init_resource::<DoodadDefinitionsResource>()
 
 
-              .add_systems(Update, rotate::handle_rotate_by_degrees)
+              
 
           //    .add_plugins(DoodadPlacementPlugin {} )
             

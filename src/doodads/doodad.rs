@@ -56,6 +56,3 @@ impl DoodadComponent {
 #[derive(Component, Debug,Default)]
 pub struct RebuildDoodad ;
 
-
-#[derive(Component, Debug,Default)]
-pub struct RotateByDegrees( pub f32 );
