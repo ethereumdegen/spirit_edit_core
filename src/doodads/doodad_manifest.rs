@@ -2,7 +2,10 @@
 
 use std::collections::BTreeMap;
 use crate::zones::zone_file::CustomPropsMap;
-use bevy::utils::HashMap;
+
+use bevy::platform::collections::hash_map::HashMap;
+
+
 use std::{
     fs::{self, File},
     io::{Read, Write},

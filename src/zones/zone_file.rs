@@ -1,7 +1,11 @@
 use std::f32::consts::PI;
 use std::path::Path;
 
-use bevy::{prelude::*, utils::HashMap};
+use bevy::{prelude::* };
+
+use bevy::platform::collections::hash_map::HashMap;
+
+
 use serde::{Deserialize, Serialize};
 
 use bevy_clay_tiles::{ clay_tile_block:: ClayTileBlock };

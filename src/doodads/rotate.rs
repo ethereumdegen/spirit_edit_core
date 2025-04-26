@@ -18,9 +18,11 @@ impl EntityCommand for RotateByDegrees {
 
 
 
-	fn apply(self, entity:  Entity, world: &mut World) {  
+	fn apply(self, mut entity_world: EntityWorldMut   ) {  
 
-		if let Some(mut xform) = world.get_mut::<Transform>(entity) {
+ 
+
+		if let Some(mut xform) = entity_world.get_mut::<Transform>( ) {
 
 
 			let degrees_amounts = self.0; 
