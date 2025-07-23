@@ -445,6 +445,7 @@ impl Default for TransformSimple {
 }
 
 
+
 impl From<Transform> for TransformSimple {
     fn from(transform: Transform) -> Self {
         // Extract translation directly
@@ -459,7 +460,7 @@ impl From<Transform> for TransformSimple {
         // Create and return a new instance of TransformSimple
         TransformSimple {
             translation,
-            rotation: Vec3::new(yaw, pitch, roll ), 
+            rotation: Vec3::new(yaw * (180.0 / PI), pitch* (180.0 / PI), roll * (180.0 / PI)),   //must be in degrees ! 
             scale,
         }
     }
