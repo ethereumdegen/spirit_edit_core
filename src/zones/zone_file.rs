@@ -429,7 +429,7 @@ impl ZoneEntity {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TransformSimple {
     pub translation: Vec3,
-    pub rotation: Vec3, //euler
+    pub rotation: Vec3, //euler  SHOULD ALWAYS BE IN DEGREES NOT RADS 
     pub scale: Vec3,
 }
 
