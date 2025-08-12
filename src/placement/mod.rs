@@ -6,9 +6,6 @@ use bevy_inspector_egui::egui::{self, RichText};*/
 
 //use bevy_editor_pls_core::{editor_window::{EditorWindow, EditorWindowContext}, Editor};
 
-use crate::{doodads::{doodad::DoodadComponent, PlaceDoodadEvent},
- //hierarchy::HierarchyWindow, 
- zones::zone_file::TransformSimple};
 
  
 

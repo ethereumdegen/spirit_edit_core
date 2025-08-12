@@ -202,7 +202,7 @@ impl std::fmt::Display for CustomProp {
 
           name: String,
 
-          transform: TransformSimple,
+          transform: TransformSimpleRads,
 
           custom_props: Option<CustomPropsMap>,
 
@@ -211,7 +211,7 @@ impl std::fmt::Display for CustomProp {
 
           //name: String,
 
-          transform: TransformSimple,
+          transform: TransformSimpleRads,
 
           clay_tile_block: ClayTileBlock,
     } ,
@@ -220,7 +220,7 @@ impl std::fmt::Display for CustomProp {
 
           name: String,
 
-          transform: TransformSimple,
+          transform: TransformSimpleRads,
 
     }
 
@@ -252,7 +252,7 @@ impl ZoneEntityV2{
 
 
 
-    pub fn get_transform_simple(&self) -> &TransformSimple {
+    pub fn get_transform_simple(&self) -> &TransformSimpleRads {
         match self {
             Self::Doodad  { transform, .. } => transform,
             Self::ClayTile  { transform, .. } => transform,
@@ -347,7 +347,7 @@ impl ZoneEntityV2{
 pub struct ZoneEntity {
     pub name: String,
 
-    pub transform: TransformSimple,
+    pub transform: TransformSimpleRads,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub custom_props: Option<CustomPropsMap>,
@@ -427,14 +427,15 @@ impl ZoneEntity {
 */
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct TransformSimple {
+pub struct TransformSimpleRads {
     pub translation: Vec3,
-    pub rotation: Vec3, //euler  SHOULD ALWAYS BE IN DEGREES NOT RADS 
+    pub rotation: Vec3, //euler  SHOULD ALWAYS BE IN RADS -- ONLY USED IN EDITOR ZONES FILES 
+
     pub scale: Vec3,
 }
 
 
-impl Default for TransformSimple {
+impl Default for TransformSimpleRads {
     fn default() -> Self {
         Self {
             translation: (0.0, 0.0, 0.0).into(),
@@ -446,7 +447,7 @@ impl Default for TransformSimple {
 
 
 
-impl From<Transform> for TransformSimple {
+impl From<Transform> for TransformSimpleRads {
     fn from(transform: Transform) -> Self {
         // Extract translation directly
         let translation = transform.translation;
@@ -458,9 +459,9 @@ impl From<Transform> for TransformSimple {
         let scale = transform.scale;
 
         // Create and return a new instance of TransformSimple
-        TransformSimple {
+        TransformSimpleRads {
             translation,
-            rotation: Vec3::new(yaw * (180.0 / PI), pitch* (180.0 / PI), roll * (180.0 / PI)),   //must be in degrees ! 
+            rotation: Vec3::new(yaw , pitch , roll  ),   //must be in degrees ! 
             scale,
         }
     }
@@ -468,9 +469,9 @@ impl From<Transform> for TransformSimple {
 
 
 
-impl TransformSimple {
-    pub fn lerp(&self, other: &TransformSimple, factor: f32) -> TransformSimple {
-        TransformSimple {
+impl TransformSimpleRads {
+    pub fn lerp(&self, other: &TransformSimpleRads, factor: f32) -> TransformSimpleRads {
+        TransformSimpleRads {
             translation: self.translation.lerp(other.translation, factor),
             rotation: self.rotation.lerp(other.rotation, factor),
             scale: self.scale.lerp(other.scale, factor),
@@ -480,9 +481,9 @@ impl TransformSimple {
     //assumes the input is degrees !!
     pub fn to_transform(&self) -> Transform {
         // Convert Euler angles (yaw, pitch, roll) back to a quaternion for rotation
-        let yaw = self.rotation.x * (PI / 180.0);
-        let pitch = self.rotation.y * (PI / 180.0);
-        let roll = self.rotation.z * (PI / 180.0);
+        let yaw = self.rotation.x  ;
+        let pitch = self.rotation.y  ;
+        let roll = self.rotation.z  ;
 
         let quat = Quat::from_euler(bevy::math::EulerRot::YXZ, yaw, pitch, roll);
 
@@ -495,7 +496,7 @@ impl TransformSimple {
     }
 
 
-    pub fn mul_transform_simple(&self , rhs : &TransformSimple ) -> TransformSimple {
+    pub fn mul_transform_simple(&self , rhs : &TransformSimpleRads ) -> TransformSimpleRads {
         // Convert Euler angles to quaternions for rotation
         let lhs_quat = Quat::from_euler(EulerRot::YXZ, self.rotation.x, self.rotation.y, self.rotation.z);
         let rhs_quat = Quat::from_euler(EulerRot::YXZ, rhs.rotation.x, rhs.rotation.y, rhs.rotation.z);
@@ -517,7 +518,7 @@ impl TransformSimple {
         let (yaw, pitch, roll) = rotation_quat.to_euler(EulerRot::YXZ);
         let rotation = Vec3::new(yaw, pitch, roll);
 
-        TransformSimple {
+        TransformSimpleRads {
             translation,
             rotation,
             scale,

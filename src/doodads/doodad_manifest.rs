@@ -95,6 +95,8 @@ pub struct DoodadDefinition {
     pub tags: Option<Vec<String>> ,
     pub snap_dimensions: Option<Vec2>, 
 
+  //   pub spawnable_components: Option<Vec< SpawnableComponent  >>,
+
     pub material_override: Option<String>,
     pub material_replacement_set: Option<  String  >
 }
@@ -115,3 +117,24 @@ fn get_doodad_manifest_file_path() -> String {
     format!("assets/doodad_manifest.ron")
 }
 */
+
+
+  
+ 
+/* 
+  #[derive(Clone,Debug,Serialize,Deserialize)]
+  #[serde(untagged)]
+ // #[serde(deny_unknown_fields = false)]
+  pub enum SpawnableComponent {
+      PointLightComponent {
+          intensity: f32,
+          color: Color,
+          shadows_enabled: bool
+      },
+
+      // Add a catch-all variant that accepts any structure
+      Unknown ,
+  }
+
+
+ */ 
